@@ -1,6 +1,6 @@
 package com.kmmtest.di
 
-import com.kmmtest.DeviceConfig
+import com.kmmtest.commoninterface.DeviceConfig
 import org.koin.dsl.module
 
 fun initKoinIos(appComponent: IosApplicationComponent) {
