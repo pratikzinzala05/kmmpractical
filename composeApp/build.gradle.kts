@@ -60,6 +60,12 @@ kotlin {
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
 
+            implementation(libs.ktor.client.json)
+            implementation(libs.ktor.client.logging)
+            implementation(libs.ktor.serialization.kotlinx.json)
+            implementation(libs.ktor.client.content.negotiation)
+
+
 
             implementation("com.arkivanov.decompose:decompose:3.2.2")
             implementation("com.arkivanov.decompose:extensions-compose:3.2.2")
