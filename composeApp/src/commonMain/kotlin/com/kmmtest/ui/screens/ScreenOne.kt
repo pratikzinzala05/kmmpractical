@@ -6,11 +6,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.ComponentContext
 import com.kmmtest.network.datawrapper.DataWrapper
 import com.kmmtest.ui.components.BaseButton
+import com.kmmtest.ui.components.BaseTextField
 import com.kmmtest.utils.BaseComponent
 import com.kmmtest.utils.ErrorHandler.errorMsg
 import kotlinx.coroutines.Dispatchers
@@ -38,11 +43,16 @@ interface OneComponent {
 @Composable
 fun ScreenOne(component: OneComponent) {
 
+    var email by remember{ mutableStateOf<String?>(null) }
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
+        BaseTextField(hint = "Enter email", textValue = email ?: "", onTextValueChanged = {
+            email = it
+        })
 
         BaseButton("Click me",onClick = {
             component.startSecond()
