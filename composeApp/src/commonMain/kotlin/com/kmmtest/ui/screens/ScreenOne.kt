@@ -29,12 +29,19 @@ class OneComponentImp(componentContext: ComponentContext, private val startSecon
     BaseComponent(),
     OneComponent, ComponentContext by componentContext {
     override fun startSecond() = startSecond.invoke()
+    @Composable
+    override fun Render() {
+        ScreenOne(this)
+    }
 }
 
 
 interface OneComponent {
 
     fun startSecond()
+
+    @Composable
+    fun Render()
 
 }
 

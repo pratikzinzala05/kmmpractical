@@ -122,6 +122,20 @@ fun MainScreen(mainComponent: DefaultMainComponent) {
     }
 }
 
+@Composable
+fun AppRoot(component: DefaultMainComponent) {
+    Children(
+        stack = component.childStack,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        when (val child = it.instance) {
+            is DefaultMainComponent.Child.One -> child.component.Render()
+            is DefaultMainComponent.Child.Two -> child.component.Render()
+        }
+    }
+}
+
+
 class DefaultMainComponent(
     componentContext: ComponentContext
 ) : ComponentContext by componentContext {

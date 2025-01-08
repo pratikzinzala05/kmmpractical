@@ -34,6 +34,11 @@ class TwoComponentImp(componentContext: ComponentContext, private val onNavBack:
     override fun onNavBack() = onNavBack.invoke()
     override suspend fun getPhoneList(): List<PhoneDetail>? =
         withIO(userRepo.getPhoneDetails())
+
+    @Composable
+    override fun Render() {
+        ScreenTwo(this)
+    }
 }
 
 
@@ -42,6 +47,9 @@ interface TwoComponent {
     fun onNavBack()
 
     suspend fun getPhoneList(): List<PhoneDetail>?
+
+    @Composable
+    fun Render()
 
 }
 
