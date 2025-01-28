@@ -11,3 +11,9 @@ actual val platformModule = module {
     single<DeviceConfig> { get<IosApplicationComponent>().deviceConfig }
 
 }
+
+
+actual class PlatformContext {
+    actual fun openUrl(url: String) {
+    }
+}

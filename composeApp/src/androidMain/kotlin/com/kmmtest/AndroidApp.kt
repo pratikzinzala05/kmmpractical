@@ -2,6 +2,7 @@ package com.kmmtest
 
 import android.app.Activity
 import android.app.Application
+import androidx.activity.ComponentActivity
 import com.kmmtest.di.initKoinAndroid
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
@@ -9,9 +10,10 @@ import org.koin.dsl.module
 class AndroidApp :Application(){
 
     private val appModule = module {
-        scope<Activity> {
-            scoped { get<Activity>() }
-        }
+
+        single<NavHandler> { AndroidNavHandler() }
+        single<ContextProvider> { (activity: MainActivity) -> AndroidContextProvider(activity) }
+
     }
 
     override fun onCreate() {
@@ -19,6 +21,7 @@ class AndroidApp :Application(){
 
         initKoinAndroid(listOf(appModule)){
             androidContext(applicationContext)
+
         }
     }
 
