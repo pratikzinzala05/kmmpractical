@@ -29,7 +29,6 @@ fun HeaderWithBackButton(onBackPress: () -> Unit) {
             modifier = Modifier.fillMaxHeight().padding(horizontal = 25.dp).baseClick {
                 onBackPress()
             },
-            colorFilter = ColorFilter.tint(colorOnPrime)
         )
 
     }

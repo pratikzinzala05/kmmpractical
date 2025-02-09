@@ -1,93 +1,164 @@
 package com.kmmtest.ui.screens
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.layout.positionInRoot
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.navigation.NavController
 import com.arkivanov.decompose.ComponentContext
-import com.kmmtest.NavHandler
-import com.kmmtest.ui.navigation.SharedElementManager
+import com.arkivanov.decompose.value.MutableValue
+import com.arkivanov.decompose.value.Value
+import com.kmmtest.ImagePickAndCrop
+import com.kmmtest.toMyBitmap
+import com.kmmtest.ui.components.BaseButton
 import com.kmmtest.utils.BaseComponent
+import io.github.vinceglb.filekit.compose.rememberFilePickerLauncher
+import io.github.vinceglb.filekit.core.PickerType
+import kotlinx.coroutines.launch
+import network.chaintech.cmpimagepickncrop.CMPImagePickNCropDialog
+import network.chaintech.cmpimagepickncrop.imagecropper.rememberImageCropper
 import org.koin.compose.koinInject
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
 
-class OneComponentImp(componentContext: ComponentContext, private val startSecond: () -> Unit) :
-    BaseComponent(), KoinComponent,
+class OneComponentImp(componentContext: ComponentContext, private val startSecond: (ByteArray) -> Unit) :
+    BaseComponent(),
     OneComponent, ComponentContext by componentContext {
 
-    private val navHandler: NavHandler by inject()
+    private val _email = MutableValue("")
+    override val email: Value<String> get() = _email
 
-
-    override fun startSecond() = startSecond.invoke()
-
+    override fun startSecond(byteArray: ByteArray) = startSecond.invoke(byteArray)
     @Composable
     override fun Render() {
         ScreenOne(this)
     }
 
-    override fun OpenUrl(url: String) {
-        navHandler.openUrl(url)
+    override fun updateEmail(email: String) {
+        _email.value = email
+
     }
 }
 
 
 interface OneComponent {
 
-    fun startSecond()
+    val email: Value<String>
+
+    fun startSecond(byteArray: ByteArray)
 
     @Composable
     fun Render()
 
-    fun OpenUrl(url:String)
+    fun updateEmail(email:String)
 
 }
+
 
 
 @Composable
 fun ScreenOne(component: OneComponent) {
 
+    val imageCropper = rememberImageCropper()
+    var selectedImage by remember { mutableStateOf<ImageBitmap?>(null) }
+    var openImagePicker by remember { mutableStateOf(value = false) }
 
 
-    val sharedElementId = remember { "sharedElement" }
-    val sharedElementSize = 100.dp
+
+    CMPImagePickNCropDialog(
+        imageCropper = imageCropper,
+        openImagePicker = openImagePicker,
+        autoZoom = true,
+        imagePickerDialogHandler = {
+            openImagePicker = it
+        },
+        selectedImageCallback = {
+            selectedImage = it
+        })
+
+    val coroutineScope = rememberCoroutineScope()
+
+    var selectedImageData by remember { mutableStateOf<ByteArray?>(null) }
+    var image by remember { mutableStateOf<ImageBitmap?>(null) }
+
+    val imagePickerLauncher = rememberFilePickerLauncher(PickerType.Image) { selectedImage ->
+        coroutineScope.launch {
+            val bytes = selectedImage?.readBytes()
+            selectedImageData = bytes
+            image = selectedImageData?.toMyBitmap()
 
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .clickable {
-
-                component.OpenUrl("https://stackoverflow.com/questions/2201917/how-can-i-open-a-url-in-androids-web-browser-from-my-application")
-
-            },
-        contentAlignment = Alignment.Center
-    ) {
-        Box(
-            modifier = Modifier
-                .size(sharedElementSize)
-                .background(Color.Blue)
-                .onGloballyPositioned { layoutCoordinates ->
-                    val position = layoutCoordinates.positionInRoot()
-                    SharedElementManager.registerElement(
-                        sharedElementId,
-                        size = sharedElementSize,
-                        offset = Offset(position.x, position.y)
-                    )
-                }
-        )
+        }
     }
+
+    val imagePickAndCrop:ImagePickAndCrop = koinInject()
+
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+
+        selectedImageData?.let {
+            Image(bitmap = it.toMyBitmap(), contentDescription = "", modifier = Modifier.fillMaxWidth().aspectRatio(1f))
+
+        }
+        BaseButton(text = "Pick Image", onClick = {
+           // imagePickerLauncher.launch()
+            imagePickAndCrop.pickAndCropImage {
+                selectedImageData = it
+
+            }
+
+        })
+
+
+        BaseButton("Click me",onClick = {
+
+            selectedImageData?.let {
+                component.startSecond(it)
+
+            }
+
+
+        })
+
+    }
+
+
+
+}
+
+
+@Composable
+fun ScreenA(navController: NavController) {
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+
+
+        BaseButton("Click me",onClick = {
+            navController.navigate("B")
+        })
+
+    }
+
 
 
 }

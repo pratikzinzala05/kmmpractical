@@ -1,5 +1,6 @@
 package com.kmmtest.di
 
+import com.kmmtest.ImagePickAndCrop
 import com.kmmtest.commoninterface.DeviceConfig
 import org.koin.dsl.module
 
@@ -10,4 +11,4 @@ fun initKoinIos(appComponent: IosApplicationComponent) {
 }
 
 
-class IosApplicationComponent(val deviceConfig: DeviceConfig)
+class IosApplicationComponent(val deviceConfig: DeviceConfig,val imagePickAndCrop: ImagePickAndCrop)

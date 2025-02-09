@@ -11,6 +11,10 @@
 		058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		3048261C2D2C20B30084BEB2 /* IosDeviceConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3048261B2D2C20AB0084BEB2 /* IosDeviceConfig.swift */; };
+		308C01C22D55ADDE00446166 /* TestHello.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308C01C12D55ADD200446166 /* TestHello.swift */; };
+		308C01C52D5755D300446166 /* CropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 308C01C42D5755D300446166 /* CropViewController */; };
+		308C01C72D5755D300446166 /* TOCropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 308C01C62D5755D300446166 /* TOCropViewController */; };
+		308C01C92D5756ED00446166 /* ImagePickAndCropImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308C01C82D5756EB00446166 /* ImagePickAndCropImpl.swift */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
 /* End PBXBuildFile section */
 
@@ -19,6 +23,8 @@
 		058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2152FB032600AC8F00CF470E /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
 		3048261B2D2C20AB0084BEB2 /* IosDeviceConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IosDeviceConfig.swift; sourceTree = "<group>"; };
+		308C01C12D55ADD200446166 /* TestHello.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHello.swift; sourceTree = "<group>"; };
+		308C01C82D5756EB00446166 /* ImagePickAndCropImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickAndCropImpl.swift; sourceTree = "<group>"; };
 		7555FF7B242A565900829871 /* kmm practical.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "kmm practical.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF82242A565900829871 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -30,6 +36,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				308C01C72D5755D300446166 /* TOCropViewController in Frameworks */,
+				308C01C52D5755D300446166 /* CropViewController in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,6 +88,8 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
+				308C01C82D5756EB00446166 /* ImagePickAndCropImpl.swift */,
+				308C01C12D55ADD200446166 /* TestHello.swift */,
 				3048261F2D2C22010084BEB2 /* diimp */,
 				058557BA273AAA24004C7B11 /* Assets.xcassets */,
 				7555FF82242A565900829871 /* ContentView.swift */,
@@ -116,6 +126,8 @@
 			);
 			name = iosApp;
 			packageProductDependencies = (
+				308C01C42D5755D300446166 /* CropViewController */,
+				308C01C62D5755D300446166 /* TOCropViewController */,
 			);
 			productName = iosApp;
 			productReference = 7555FF7B242A565900829871 /* kmm practical.app */;
@@ -147,6 +159,7 @@
 			);
 			mainGroup = 7555FF72242A565900829871;
 			packageReferences = (
+				308C01C32D5755D300446166 /* XCRemoteSwiftPackageReference "TOCropViewController" */,
 			);
 			productRefGroup = 7555FF7C242A565900829871 /* Products */;
 			projectDirPath = "";
@@ -197,7 +210,9 @@
 			files = (
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				3048261C2D2C20B30084BEB2 /* IosDeviceConfig.swift in Sources */,
+				308C01C22D55ADDE00446166 /* TestHello.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
+				308C01C92D5756ED00446166 /* ImagePickAndCropImpl.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -400,6 +415,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		308C01C32D5755D300446166 /* XCRemoteSwiftPackageReference "TOCropViewController" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/TimOliver/TOCropViewController";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.7.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		308C01C42D5755D300446166 /* CropViewController */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 308C01C32D5755D300446166 /* XCRemoteSwiftPackageReference "TOCropViewController" */;
+			productName = CropViewController;
+		};
+		308C01C62D5755D300446166 /* TOCropViewController */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 308C01C32D5755D300446166 /* XCRemoteSwiftPackageReference "TOCropViewController" */;
+			productName = TOCropViewController;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 7555FF73242A565900829871 /* Project object */;
 }

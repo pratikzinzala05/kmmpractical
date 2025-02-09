@@ -1,10 +1,24 @@
 package com.kmmtest
 
-import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.ImageBitmap
+import com.arkivanov.decompose.extensions.compose.stack.animation.StackAnimation
+import com.arkivanov.essenty.backhandler.BackHandler
 import org.koin.core.module.Module
 
 expect val platformModule: Module
 
-interface NavHandler {
-    fun openUrl(url: String)
+expect fun <C : Any, T : Any> backAnimation(
+    backHandler: BackHandler,
+    onBack: () -> Unit,
+): StackAnimation<C, T>
+
+
+expect fun getHelloFromDevice()
+
+
+
+expect fun ByteArray.toMyBitmap(): ImageBitmap
+
+interface ImagePickAndCrop {
+    fun pickAndCropImage(onResult: (ByteArray?) -> Unit)
 }

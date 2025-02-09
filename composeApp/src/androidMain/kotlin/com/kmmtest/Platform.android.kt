@@ -1,13 +1,21 @@
 package com.kmmtest
 
-import android.content.Intent
-import android.net.Uri
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asAndroidBitmap
+import androidx.compose.ui.graphics.asImageBitmap
+import com.arkivanov.decompose.extensions.compose.stack.animation.StackAnimation
+import com.arkivanov.decompose.extensions.compose.stack.animation.predictiveback.predictiveBackAnimatable
+import com.arkivanov.decompose.extensions.compose.stack.animation.predictiveback.predictiveBackAnimation
+import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
+import com.arkivanov.essenty.backhandler.BackHandler
 import com.kmmtest.commoninterface.DeviceConfig
 import com.kmmtest.diimp.AndroidDeviceConfig
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import org.koin.core.module.Module
 import org.koin.dsl.module
+import java.io.ByteArrayOutputStream
 
 
 actual val platformModule: Module = module {
@@ -17,17 +25,31 @@ actual val platformModule: Module = module {
 
 }
 
+actual fun <C : Any, T : Any> backAnimation(
+    backHandler: BackHandler,
+    onBack: () -> Unit,
+): StackAnimation<C, T>  =
+    predictiveBackAnimation(
+        backHandler = backHandler,
+        fallbackAnimation = stackAnimation(),
+        selector = { initialBackEvent, _, _ ->
+            predictiveBackAnimatable(
+                initialBackEvent = initialBackEvent,
+                exitModifier = { progress, _ ->
+                    Modifier
+                },
+                enterModifier = { progress, _ -> Modifier},
+            )
+        },
+        onBack = onBack,
+    )
 
-class AndroidNavHandler : NavHandler, KoinComponent {
+actual fun getHelloFromDevice() {
+}
 
-    private val contextProvider: ContextProvider by inject()
-
-    override fun openUrl(url: String) {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        contextProvider.getMainActivity().startActivity(intent)
-    }
-
+actual fun ByteArray.toMyBitmap(): ImageBitmap {
+    val bitmap = BitmapFactory.decodeByteArray(this, 0, this.size)
+    return bitmap?.asImageBitmap() ?: throw IllegalArgumentException("Failed to decode bitmap")
 }
 
 class AndroidContextProvider(private val mainActivity: MainActivity) : ContextProvider {

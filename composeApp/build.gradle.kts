@@ -37,12 +37,13 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             implementation(libs.koin.android)
             implementation(libs.ktor.client.okhttp)
+            implementation("com.vanniktech:android-image-cropper:4.6.0")
+
 
         }
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
-            implementation(compose.material)
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
@@ -50,6 +51,8 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(libs.kotlinx.serialization.json)
 
+            implementation(compose.material3)
+            implementation(compose.material)
 
 
             implementation(libs.coil.compose.core)
@@ -65,16 +68,30 @@ kotlin {
             implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.ktor.client.content.negotiation)
 
+            implementation(libs.navigation.compose)
 
 
             implementation("com.arkivanov.decompose:decompose:3.2.2")
             implementation("com.arkivanov.decompose:extensions-compose:3.2.2")
-            implementation("com.arkivanov.essenty:lifecycle:2.2.1")
+            implementation("com.arkivanov.essenty:lifecycle:2.4.0")
+//            implementation("com.arkivanov.essenty:backhandler:2.4.0")
+
+            implementation("network.chaintech:cmp-image-pick-n-crop:1.0.8")
+
+            implementation("org.jetbrains.kotlinx:kotlinx-io-core:0.6.0")
+
+            // Enables FileKit without Compose dependencies
+            implementation("io.github.vinceglb:filekit-core:0.8.8")
+
+            // Enables FileKit with Composable utilities
+            implementation("io.github.vinceglb:filekit-compose:0.8.8")
+
 
 
         }
 
         iosMain.dependencies {
+
             implementation(libs.ktor.client.darwin)
 
         }
@@ -106,9 +123,13 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    dependencies{
+
+    }
 }
 
 dependencies {
+    implementation(libs.androidx.ui.graphics.android)
     debugImplementation(compose.uiTooling)
 }
 
