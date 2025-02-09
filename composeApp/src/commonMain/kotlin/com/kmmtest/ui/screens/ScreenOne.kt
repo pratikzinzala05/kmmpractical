@@ -111,17 +111,29 @@ fun ScreenOne(component: OneComponent) {
     ) {
 
 
-        selectedImageData?.let {
-            Image(bitmap = it.toMyBitmap(), contentDescription = "", modifier = Modifier.fillMaxWidth().aspectRatio(1f))
+        selectedImage?.let {
+            Image(bitmap = it, contentDescription = "", modifier = Modifier.fillMaxWidth().aspectRatio(1f))
 
         }
         BaseButton(text = "Pick Image", onClick = {
            // imagePickerLauncher.launch()
-            imagePickAndCrop.pickAndCropImage {
+
+            imagePickAndCrop.pickImage {
                 selectedImageData = it
+                selectedImage = it?.toMyBitmap()
 
             }
 
+        })
+        BaseButton(text = "Crop Image", onClick = {
+           // imagePickerLauncher.launch()
+
+
+            imagePickAndCrop.cropImage {
+                selectedImageData = it
+                selectedImage = it?.toMyBitmap()
+
+            }
         })
 
 

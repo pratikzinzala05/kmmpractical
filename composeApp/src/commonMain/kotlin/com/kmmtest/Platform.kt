@@ -20,5 +20,6 @@ expect fun getHelloFromDevice()
 expect fun ByteArray.toMyBitmap(): ImageBitmap
 
 interface ImagePickAndCrop {
-    fun pickAndCropImage(onResult: (ByteArray?) -> Unit)
+    fun pickImage(onResult: (ByteArray?) -> Unit)
+    fun cropImage(onResult: (ByteArray?) -> Unit)
 }

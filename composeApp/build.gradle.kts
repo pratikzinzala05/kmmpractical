@@ -124,6 +124,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
     dependencies{
+        implementation ("com.github.yalantis:ucrop:2.2.10")
 
     }
 }
